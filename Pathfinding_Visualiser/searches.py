@@ -205,7 +205,7 @@ class Searches:
                     #add the node to pq if its state is not reached or if the state reached has higher cost
                     if not nodes[i].state in reached_nodes or reached_nodes[nodes[i].state].path_cost > nodes[i].path_cost:
                         #get the closeset goal to the state
-                        #goal = self.closest_goal_to_cell(self.world.graph.graph[nodes[i].state[1]][nodes[i].state[0]])
+                        goal = self.closest_goal_to_cell(self.world.graph.graph[nodes[i].state[1]][nodes[i].state[0]])
                         #get the distance from the current state to the goal(evaluation function)
                         distacne_to_goal = manhatan(nodes[i], Node(state=goal.pos))
                         reached_nodes[nodes[i].state] = nodes[i]
@@ -220,40 +220,40 @@ class Searches:
     It gurantee the shortest path and it is informed search.
     """ 
     def aStar(self, start_pos):
-        #the time when the search start.
+        # The time when the search starts.
         start_time = time.time()
-        #initial node with initial state
+        # Initial node with initial state
         node = Node(state=start_pos)
-        #the goal closest to the current state
+        # The goal closest to the current state
         goal = self.closest_goal_to_cell(self.world.graph.graph[node.state[1]][node.state[0]])
         if goal != None:
-            #get the distance from the current state to the goal(heuristic function)
-            distacne_to_goal = manhatan(node, Node(state=goal.pos)) 
-            print(distacne_to_goal)
-            #priotiy queue priorise the nodes based on heuristic function + node path_cost
-            pq:PriorityQueue = PriorityQueue()
-            pq.put((distacne_to_goal + node.path_cost, node))
-            #to keet track of the reached nodes
-            reached_nodes= {
+            # Get the distance from the current state to the goal (heuristic function)
+            distance_to_goal = manhatan(node, Node(state=goal.pos))
+            print(distance_to_goal)
+            # Priority queue prioritizes the nodes based on the heuristic function + node path_cost
+            pq: PriorityQueue = PriorityQueue()
+            pq.put((distance_to_goal + node.path_cost, node))
+            # To keep track of the reached nodes
+            reached_nodes = {
                 node.state: node,
             }
-            while(pq.qsize() > 0):
+            while pq.qsize() > 0:
                 node = pq.get()[1]
-                if(node.state != start_pos):
-                     #this list will be used to visualise the search
+                if node.state != start_pos:
+                    # This list will be used to visualize the search
                     self.node_visited_list.append(node)
-                    # return the current node if it is the goal
+                # Return the current node if it is the goal
                 if self.world.graph.graph[node.state[1]][node.state[0]].is_goal:
                     self._add_search_details("Astar search", start_time, node)
                     return node
-                nodes:list[Node] = self.problem.expand(node, self.world.graph.graph)
+                nodes: list[Node] = self.problem.expand(node, self.world.graph.graph)
                 for i in range(len(nodes)):
-                    #add the node to pq if its state is not reached or if the state reached has higher cost
+                    # Add the node to pq if its state is not reached or if the state reached has a higher cost
                     if not nodes[i].state in reached_nodes or reached_nodes[nodes[i].state].path_cost > nodes[i].path_cost:
-                        #goal = self.closest_goal_to_cell(self.world.graph.graph[nodes[i].state[1]][nodes[i].state[0]])
-                        distacne_to_goal = manhatan(nodes[i], Node(state=goal.pos)) 
+                        goal = self.closest_goal_to_cell(self.world.graph.graph[nodes[i].state[1]][nodes[i].state[0]])
+                        distance_to_goal = manhatan(nodes[i], Node(state=goal.pos))
                         reached_nodes[nodes[i].state] = nodes[i]
-                        pq.put((distacne_to_goal + nodes[i].path_cost, nodes[i]))
+                        pq.put((distance_to_goal + nodes[i].path_cost, nodes[i]))
         return None
 
     def reset_searches(self):
