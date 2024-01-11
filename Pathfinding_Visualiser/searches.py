@@ -386,74 +386,74 @@ class Searches:
     #     return solution
     
 
-    def BAstar(self, start_pos):
-        start_time = time.time()
-        start_node:Node = Node(state=start_pos)
+    # def BAstar(self, start_pos):
+    #     start_time = time.time()
+    #     start_node:Node = Node(state=start_pos)
 
-        closesest_goal = self.closest_goal_to_cell(self.world.graph.graph[start_pos[1]][start_pos[0]])
-        if closesest_goal == None: return None
-        goal_node:Node = Node(state=closesest_goal.pos)
-        forward_q = PriorityQueue()
-        backward_q =PriorityQueue()
-        #fScore_f = self.world.graph.graph[start_node.state[1]][start_node.state[0]].manhatan(closesest_goal) + start_node.path_cost
-        #fScore_b = closesest_goal.manhatan(self.world.graph.graph[start_node.state[1]][start_node.state[0]]) + goal_node.path_cost
-        fScore_f = manhatan(start_node, goal_node) + start_node.path_cost
-        fScore_b = manhatan(goal_node, start_node) + goal_node.path_cost
-        forward_q.put((fScore_f, start_node))
-        backward_q.put((fScore_b, goal_node))
-        f_reached = {start_node.state: start_node}
-        b_reached = {goal_node.state: goal_node}
-        solution = None
-        while forward_q.qsize() > 0 and backward_q.qsize() > 0:
-            solution = self.BAstarSearch("F", forward_q, f_reached, b_reached, solution,  goal_node, start_node)
-            solution = self.BAstarSearch("B", backward_q, b_reached, f_reached, solution,  goal_node, start_node)
+    #     closesest_goal = self.closest_goal_to_cell(self.world.graph.graph[start_pos[1]][start_pos[0]])
+    #     if closesest_goal == None: return None
+    #     goal_node:Node = Node(state=closesest_goal.pos)
+    #     forward_q = PriorityQueue()
+    #     backward_q =PriorityQueue()
+    #     #fScore_f = self.world.graph.graph[start_node.state[1]][start_node.state[0]].manhatan(closesest_goal) + start_node.path_cost
+    #     #fScore_b = closesest_goal.manhatan(self.world.graph.graph[start_node.state[1]][start_node.state[0]]) + goal_node.path_cost
+    #     fScore_f = manhatan(start_node, goal_node) + start_node.path_cost
+    #     fScore_b = manhatan(goal_node, start_node) + goal_node.path_cost
+    #     forward_q.put((fScore_f, start_node))
+    #     backward_q.put((fScore_b, goal_node))
+    #     f_reached = {start_node.state: start_node}
+    #     b_reached = {goal_node.state: goal_node}
+    #     solution = None
+    #     while forward_q.qsize() > 0 and backward_q.qsize() > 0:
+    #         solution = self.BAstarSearch("F", forward_q, f_reached, b_reached, solution,  goal_node, start_node)
+    #         solution = self.BAstarSearch("B", backward_q, b_reached, f_reached, solution,  goal_node, start_node)
 
-            # if (manhatan(forward_q.queue[0][1], goal_node) + forward_q.queue[0][1].path_cost) < (manhatan(backward_q.queue[0][1], start_node) + backward_q.queue[0][1].path_cost):
-            #     solution = self.BAstarSearch("F", forward_q, f_reached, b_reached, solution,  goal_node, start_node)
-            # else:
-            #     solution = self.BAstarSearch("B", backward_q, b_reached, f_reached, solution,  goal_node, start_node)
-            if solution != None:
-                self._add_search_details("Bidirectional A* search", start_time, solution)
-                return solution
-        return solution
+    #         # if (manhatan(forward_q.queue[0][1], goal_node) + forward_q.queue[0][1].path_cost) < (manhatan(backward_q.queue[0][1], start_node) + backward_q.queue[0][1].path_cost):
+    #         #     solution = self.BAstarSearch("F", forward_q, f_reached, b_reached, solution,  goal_node, start_node)
+    #         # else:
+    #         #     solution = self.BAstarSearch("B", backward_q, b_reached, f_reached, solution,  goal_node, start_node)
+    #         if solution != None:
+    #             self._add_search_details("Bidirectional A* search", start_time, solution)
+    #             return solution
+    #     return solution
     
 
-    def BAstarSearch(self, dir, frontier:PriorityQueue, reached:list, reached_, solution,  goal_node=Node(state=(0,0)), start_node =Node(state=(0,0))):
-        node = frontier.get()[1]
-        if dir == "F":
-            self.node_visited_list.append(node)
-        elif dir == "B":
-            if node.state != goal_node.state:
-                self.node_visited_list_b.append(node)
-        nodes = self.problem.expand(node, self.world.graph.graph)
-        for child in nodes:
-            if not child.state in reached or reached[child.state].path_cost > child.path_cost:
-                if dir == "F":
-                    #fscore = self.world.graph.graph[child.state[1]][child.state[0]].manhatan(self.world.graph.graph[goal_node.state[1]][goal_node.state[0]]) + child.path_cost
-                    fscore = manhatan(child, goal_node) + child.path_cost
-                    frontier.put((fscore, child))
-                elif dir == "B":
-                    #fscore = self.world.graph.graph[child.state[1]][child.state[0]].manhatan(self.world.graph.graph[start_node.state[1]][start_node .state[0]]) + child.path_cost
-                    fscore = manhatan(child, start_node) + child.path_cost
-                    frontier.put((fscore, child))
-                reached[child.state] = child
-                solution2 = None
-                if child.state in reached_:
-                    if dir == "F":
-                        self.node_visited_list_b.append(child)
-                        solution2 = join_nodes(reached_[child.state], child)
-                    elif dir == "B":
-                        self.node_visited_list.append(child)
-                        solution2 = join_nodes(child, reached_[child.state])
+    # def BAstarSearch(self, dir, frontier:PriorityQueue, reached:list, reached_, solution,  goal_node=Node(state=(0,0)), start_node =Node(state=(0,0))):
+    #     node = frontier.get()[1]
+    #     if dir == "F":
+    #         self.node_visited_list.append(node)
+    #     elif dir == "B":
+    #         if node.state != goal_node.state:
+    #             self.node_visited_list_b.append(node)
+    #     nodes = self.problem.expand(node, self.world.graph.graph)
+    #     for child in nodes:
+    #         if not child.state in reached or reached[child.state].path_cost > child.path_cost:
+    #             if dir == "F":
+    #                 #fscore = self.world.graph.graph[child.state[1]][child.state[0]].manhatan(self.world.graph.graph[goal_node.state[1]][goal_node.state[0]]) + child.path_cost
+    #                 fscore = manhatan(child, goal_node) + child.path_cost
+    #                 frontier.put((fscore, child))
+    #             elif dir == "B":
+    #                 #fscore = self.world.graph.graph[child.state[1]][child.state[0]].manhatan(self.world.graph.graph[start_node.state[1]][start_node .state[0]]) + child.path_cost
+    #                 fscore = manhatan(child, start_node) + child.path_cost
+    #                 frontier.put((fscore, child))
+    #             reached[child.state] = child
+    #             solution2 = None
+    #             if child.state in reached_:
+    #                 if dir == "F":
+    #                     self.node_visited_list_b.append(child)
+    #                     solution2 = join_nodes(reached_[child.state], child)
+    #                 elif dir == "B":
+    #                     self.node_visited_list.append(child)
+    #                     solution2 = join_nodes(child, reached_[child.state])
                         
-                    #solution2 = join_nodes(child, reached_[child.state])
-                    if solution != None:
-                        if(solution2.path_cost < solution.path_cost):
-                            solution = solution2
-                    else:
-                        solution = solution2
+    #                 #solution2 = join_nodes(child, reached_[child.state])
+    #                 if solution != None:
+    #                     if(solution2.path_cost < solution.path_cost):
+    #                         solution = solution2
+    #                 else:
+    #                     solution = solution2
                     
-        return solution
+    #     return solution
                 
 
 

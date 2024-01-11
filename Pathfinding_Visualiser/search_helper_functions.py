@@ -55,26 +55,26 @@ def join_nodes(node1, node2:Node):
 
 
 #Becuase of the joined nodes in the BA* the nodes actions are not in the correct order. This function will return correct path directions
-def modify_BAstar_actions(node):
-    node2 = node
-    directions = []
-    #nodes = []
-    while(node2.parent != None):
-        #means we move right from child to parent
-        if node2.parent.state[0] - node2.state[0] == 1:
-            directions.append("RIHGT")
-        #means we move left from child to parent
-        elif node2.parent.state[0] - node2.state[0] == -1:
-            directions.append("LEFT") 
-        #means we move up from child to parent
-        elif node2.parent.state[1] - node2.state[1] == -1:
-            directions.append("UP") 
-        #means we move down from child to parent
-        elif node2.parent.state[1] - node2.state[1] == 1:
-            directions.append("DOWN") 
-        node2 = node2.parent
-        #nodes.append(node)
-    return directions
+# def modify_BAstar_actions(node):
+#     node2 = node
+#     directions = []
+#     #nodes = []
+#     while(node2.parent != None):
+#         #means we move right from child to parent
+#         if node2.parent.state[0] - node2.state[0] == 1:
+#             directions.append("RIHGT")
+#         #means we move left from child to parent
+#         elif node2.parent.state[0] - node2.state[0] == -1:
+#             directions.append("LEFT") 
+#         #means we move up from child to parent
+#         elif node2.parent.state[1] - node2.state[1] == -1:
+#             directions.append("UP") 
+#         #means we move down from child to parent
+#         elif node2.parent.state[1] - node2.state[1] == 1:
+#             directions.append("DOWN") 
+#         node2 = node2.parent
+#         #nodes.append(node)
+#     return directions
 
 
 

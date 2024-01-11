@@ -135,32 +135,32 @@ def gbfs(_searches:Searches, world:World):
 
 
 
-def bastar(_searches:Searches, world:World):
-    search_node = _searches.BAstar(world.agent_start_pos)
-    node = search_node
-    if search_node == None: return None
-    print("Filename = " + sys.argv[1])
-    print("Bidirectional A* Search")
-    print("Number of nodes visited = " + str((len(_searches.node_visited_list) + len(_searches.node_visited_list_b))))
-    search_path_dir = modify_BAstar_actions(search_node)
-    #print(search_node.state)
-    #print(search_node.parent.action)
-    #node_state = search_node.state
-    for i in  range(len(search_path_dir)):
-        print(search_path_dir[i])
+# def bastar(_searches:Searches, world:World):
+#     search_node = _searches.BAstar(world.agent_start_pos)
+#     node = search_node
+#     if search_node == None: return None
+#     print("Filename = " + sys.argv[1])
+#     print("Bidirectional A* Search")
+#     print("Number of nodes visited = " + str((len(_searches.node_visited_list) + len(_searches.node_visited_list_b))))
+#     search_path_dir = modify_BAstar_actions(search_node)
+#     #print(search_node.state)
+#     #print(search_node.parent.action)
+#     #node_state = search_node.state
+#     for i in  range(len(search_path_dir)):
+#         print(search_path_dir[i])
 
-    # while search_node != None:
-    #     #world.path.append(bibs_node.state)
-    #     search_path_dir.append(search_node.action)
-    #     search_node = search_node.parent
-    # if world.graph.graph[node_state[1]][node_state[0]] in world.goals:
-    #     for i in range(len(search_path_dir)-1, -1, -1):
-    #         print(search_path_dir[i])
-    # else:
-    #      for i in range(len(search_path_dir)-1):
-    #         print(search_path_dir[i])
-    print("---------------------")    
-    return node
+#     # while search_node != None:
+#     #     #world.path.append(bibs_node.state)
+#     #     search_path_dir.append(search_node.action)
+#     #     search_node = search_node.parent
+#     # if world.graph.graph[node_state[1]][node_state[0]] in world.goals:
+#     #     for i in range(len(search_path_dir)-1, -1, -1):
+#     #         print(search_path_dir[i])
+#     # else:
+#     #      for i in range(len(search_path_dir)-1):
+#     #         print(search_path_dir[i])
+#     print("---------------------")    
+#     return node
 
 
 def ids(_searches:Searches, world:World):
@@ -197,8 +197,8 @@ def execute_search(search_name, searches:Searches, world:World):
         #return bbfs(searches, world)
     elif search_name == IDS:
         return ids(searches, world)
-    elif search_name == BASTAR:
-        return bastar(searches, world)
+    # elif search_name == BASTAR:
+    #     return bastar(searches, world)
 
 
 def check_key_event_for_search(searches, world:World):
