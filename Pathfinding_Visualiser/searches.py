@@ -263,39 +263,39 @@ class Searches:
 
 
     
-    def IDS(self, start_pos):
-        start_time = time.time()
-        depth = 0
-        #loop until the result is = None or a solution node
-        if len(self.world.goals) == 0:return None
-        while True:
-            result = self.DLS(start_pos=start_pos, depth_limit=depth,start_time=start_time)
-            if result != "CUTOFF": return result
-            #increment depth limit
-            depth += 1
+    # def IDS(self, start_pos):
+    #     start_time = time.time()
+    #     depth = 0
+    #     #loop until the result is = None or a solution node
+    #     if len(self.world.goals) == 0:return None
+    #     while True:
+    #         result = self.DLS(start_pos=start_pos, depth_limit=depth,start_time=start_time)
+    #         if result != "CUTOFF": return result
+    #         #increment depth limit
+    #         depth += 1
 
 
-    def DLS(self, start_pos, depth_limit, start_time):
-        stack = deque()  
-        node:Node = Node(state=start_pos)      
-        stack.append(node)
-        result = None
-        while(len(stack) > 0): 
-            node = stack.pop()
-            self.node_visited_list.append(node)
-            if(self.world.graph.graph[node.state[1]][node.state[0]].is_goal):
-                self._add_search_details("Iterative deepening search", start_time, node)
-                return node
-            if node_depth(node) > depth_limit:
-                #that means we will increase the depth in the next iteration of IDS.
-                #There is still a chance that the solution can be found from any node in the stack if there is any.
-                result = "CUTOFF"
-            elif  not is_cycle(node=node):
-                nodes = self.problem.expand(node, self.world.graph.graph)
-                for i in range(len(nodes)-1, -1,-1):
-                        stack.append(nodes[i])
+    # def DLS(self, start_pos, depth_limit, start_time):
+    #     stack = deque()  
+    #     node:Node = Node(state=start_pos)      
+    #     stack.append(node)
+    #     result = None
+    #     while(len(stack) > 0): 
+    #         node = stack.pop()
+    #         self.node_visited_list.append(node)
+    #         if(self.world.graph.graph[node.state[1]][node.state[0]].is_goal):
+    #             self._add_search_details("Iterative deepening search", start_time, node)
+    #             return node
+    #         if node_depth(node) > depth_limit:
+    #             #that means we will increase the depth in the next iteration of IDS.
+    #             #There is still a chance that the solution can be found from any node in the stack if there is any.
+    #             result = "CUTOFF"
+    #         elif  not is_cycle(node=node):
+    #             nodes = self.problem.expand(node, self.world.graph.graph)
+    #             for i in range(len(nodes)-1, -1,-1):
+    #                     stack.append(nodes[i])
             
-        return result
+    #     return result
     
 
 

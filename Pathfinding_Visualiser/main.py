@@ -163,23 +163,23 @@ def gbfs(_searches:Searches, world:World):
 #     return node
 
 
-def ids(_searches:Searches, world:World):
-    ids_node = _searches.IDS(world.agent_start_pos)
-    node = ids_node
-    if ids_node == None: return None
-    print("Filename = " + sys.argv[1])
-    print("Iterative deepening Search")
-    print("Number of nodes visited = " + str((len(_searches.node_visited_list))))
-    search_path_dir = []
-    while ids_node != None:
-        #world.path.append(idastar_node.state)
-        search_path_dir.append(ids_node.action)
-        ids_node = ids_node.parent
+# def ids(_searches:Searches, world:World):
+#     ids_node = _searches.IDS(world.agent_start_pos)
+#     node = ids_node
+#     if ids_node == None: return None
+#     print("Filename = " + sys.argv[1])
+#     print("Iterative deepening Search")
+#     print("Number of nodes visited = " + str((len(_searches.node_visited_list))))
+#     search_path_dir = []
+#     while ids_node != None:
+#         #world.path.append(idastar_node.state)
+#         search_path_dir.append(ids_node.action)
+#         ids_node = ids_node.parent
 
-    for i in range(len(search_path_dir)-1, -1, -1):
-        print(search_path_dir[i])
-    print("---------------------") 
-    return node   
+#     for i in range(len(search_path_dir)-1, -1, -1):
+#         print(search_path_dir[i])
+#     print("---------------------") 
+#     return node   
 
 
 
@@ -195,8 +195,8 @@ def execute_search(search_name, searches:Searches, world:World):
         return dfs(searches, world)
     #elif search_name == BBFS:
         #return bbfs(searches, world)
-    elif search_name == IDS:
-        return ids(searches, world)
+    #elif search_name == IDS:
+    #    return ids(searches, world)
     # elif search_name == BASTAR:
     #     return bastar(searches, world)
 
@@ -247,9 +247,9 @@ def main():
         pygame.K_a:ASTAR,
         pygame.K_g:GBFS,
         pygame.K_d:DFS,
-        pygame.K_i:IDS,
-        pygame.K_f:BBFS,
-        pygame.K_y:BASTAR
+        #pygame.K_i:IDS,
+        #pygame.K_f:BBFS,
+        #pygame.K_y:BASTAR
     
     }  
 
