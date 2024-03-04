@@ -161,8 +161,9 @@ class World:
             for col in range(self.graph.cols):
                 if pygame.mouse.get_pos()[0] > self.rect[row][col].left and pygame.mouse.get_pos()[0] < (self.rect[row][col].left + self.rect[row][col].width) and pygame.mouse.get_pos()[1] > self.rect[row][col].top and pygame.mouse.get_pos()[1] <(self.rect[row][col].top + self.rect[row][col].height):
                     if (not self.graph.graph[row][col].is_goal and not self.graph.graph[row][col].is_wall):
-                        self.graph.graph[row][col].is_goal = True
-                        self.goals.append(self.graph.graph[row][col])
+                        if(len(self.goals) == 0):
+                            self.graph.graph[row][col].is_goal = True
+                            self.goals.append(self.graph.graph[row][col])
                         return
                     if (not self.graph.graph[row][col].is_wall):
                         self.goals.remove(self.graph.graph[row][col])
@@ -234,13 +235,15 @@ class World:
                 initialPos = [int(n) for n in line.strip()[1:-1].split(",")]
                 self.agent_start_pos = (initialPos[0], initialPos[1])
             if line_num == 2:
-                goals_pos = [n for n in line.strip().split("|")]
+                goals_pos =  [int(n) for n in line.strip()[1:-1].split(",")]
                 self.goals.clear()
-                for p in goals_pos:
-                    pos = p.strip()[1:-1].split(",")
-                    if len(pos) == 2:
-                        graph.graph[int(pos[1])][int(pos[0])].is_goal = True
-                        self.goals.append(graph.graph[int(pos[1])][int(pos[0])])
+                graph.graph[int(goals_pos[1])][int(goals_pos[0])].is_goal = True
+                self.goals.append(graph.graph[int(goals_pos[1])][int(goals_pos[0])])
+                # for p in goals_pos:
+                #     pos = p.strip()[1:-1].split(",")
+                #     if len(pos) == 2:
+                #         graph.graph[int(pos[1])][int(pos[0])].is_goal = True
+                #         self.goals.append(graph.graph[int(pos[1])][int(pos[0])])
             if  line_num == 3:
                 wall_cell = [int(n) for n in line.strip()[1:-1].split(",")]
                 graph.graph[wall_cell[1]][wall_cell[0]].is_wall = True
